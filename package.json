@@ -1,0 +1,23 @@
+{
+  "name": "bases-calculator",
+  "version": "1.0.0",
+  "description": "Simple number bases calculator w.i.p",
+  "main": "base-calculator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "browserify main.js - o bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luksari/bases-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luksari/bases-calculator/issues"
+  },
+  "homepage": "https://github.com/luksari/bases-calculator#readme",
+  "dependencies": {
+    "big.js": "^5.0.3"
+  }
+}

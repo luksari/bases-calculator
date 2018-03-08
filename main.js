@@ -10,31 +10,22 @@ const errBox = document.getElementsByClassName('error-box');
 createBases();
 showLegend();
 
-
 numInput.addEventListener('input', (e) => {
   if(e.target.value.length >= 20){
     e.target.value = e.target.value.substring(0, 20);
-    showError("Maksymalna długość ciągu znakowego to 20");
+    showError("Maksymalna długość ciągu znakowego to 20!");
   }
-  const isnum = /^\d+$/.test(e.target.value);
-  if(!isnum){
-    e.target.value = e.target.value.replace(/\D/g, '')
-    showError(`Ciąg liczbowy nie może zawierać innych znaków niż 0,1...9`);
-  }
-  if(e.target.value.length === 0){
-    e.target.value = 0;
-    showError(`Wpisz ciąg liczbowy`);
-  }
+
 });
 
 converter.addEventListener('click', () => {
-  const inBase = 10;
-  const outBase = baseOutSelect.value;
-  const inValue = new Big(numInput.value);
-  const outValue = convertToBase(inValue, 10, outBase);
-  
-
-  output.innerHTML = `Wynik: ${outValue}`;
+  if(!isEmpty(numInput) && isNumeric(numInput)){
+    const inBase = 10;
+    const outBase = baseOutSelect.value;
+    const inValue = new Big(numInput.value);
+    const outValue = convertToBase(inValue, 10, outBase);
+    output.innerHTML = `Wynik: ${outValue}`;
+  }
 });
 
 function convertToBase(value, inBase, outBase) {
@@ -63,18 +54,11 @@ function convertToBase(value, inBase, outBase) {
 
 function createBases() {
   for (let i = 1; i <= 64; i++) {
-    // let inBase = new Option(i, i)
     let outBase = new Option(i, i)
     if (i === 1) {
-      // inBase.value = -2;
-      // inBase.text = -2;
       outBase.value = -2;
       outBase.text = -2;
     }
-    // if (i === 10) {
-    //   inBase.selected = true;
-    // }
-    // baseInSelect.add(inBase, null);
     baseOutSelect.add(outBase, null);
   }
 }
@@ -91,9 +75,28 @@ function showLegend() {
   }
   wrapper[0].appendChild(legend);
 }
-function showError(err){
 
+function showError(err){
   errBox[0].style.opacity = 1;
   errBox[0].innerHTML = `${err}`;
   throw new Error(err);
+}
+
+function isEmpty(input) {
+  if (input.value.length < 0) {
+    e.target.value = 0;
+    showError(`Wpisz ciąg liczbowy!`);
+    return true;
+  }
+  else return false;
+}
+
+function isNumeric(input) {
+    const isnum = /^\d+$/.test(input.value);
+    if(!isnum) {
+      input.value = input.value.replace(/\D/g, '')
+      showError(`Ciąg liczbowy nie może zawierać innych znaków niż 0,1...9!`);
+      return false;
+  }
+  return true;
 }
